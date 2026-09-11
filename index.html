@@ -295,6 +295,65 @@ WHATSAPP PIKIHUB
 </a>
 <p style="margin-top:15px;font-weight:bold">0786673688</p>
 </section>
+
+<section id="popular-brands" style="padding:35px 5%;background:white">
+<h2 style="text-align:center">Popular Motorcycle Brands in Kenya 🇰🇪</h2>
+<p style="text-align:center;color:#667085">Choose a brand to find motorcycles on PikiHub</p>
+
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:12px;max-width:1000px;margin:25px auto">
+
+<button onclick="chooseBrand('Bajaj')">🏍️ Bajaj</button>
+<button onclick="chooseBrand('TVS')">🏍️ TVS</button>
+<button onclick="chooseBrand('Honda')">🏍️ Honda</button>
+<button onclick="chooseBrand('Yamaha')">🏍️ Yamaha</button>
+<button onclick="chooseBrand('Haojue')">🏍️ Haojue</button>
+<button onclick="chooseBrand('Haojin')">🏍️ Haojin</button>
+<button onclick="chooseBrand('Hero')">🏍️ Hero</button>
+<button onclick="chooseBrand('Kibo')">🏍️ Kibo</button>
+<button onclick="chooseBrand('Captain')">🏍️ Captain</button>
+<button onclick="chooseBrand('Skygo')">🏍️ Skygo</button>
+
+</div>
+</section>
+
+<section id="motorcycle-services" style="padding:40px 5%;background:#f5f7fa">
+<h2 style="text-align:center">Our Motorcycle Services 🏍️</h2>
+<p style="text-align:center;color:#667085">Everything you need before and after buying your motorcycle.</p>
+
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;max-width:1100px;margin:25px auto">
+
+<button onclick="serviceMessage('Price Guide')" style="background:white;padding:25px;text-align:left;box-shadow:0 5px 18px #0001">
+<h3>💰 Price Guide</h3>
+<p>Check motorcycle prices and compare different bikes.</p>
+</button>
+
+<button onclick="serviceMessage('Financing')" style="background:white;padding:25px;text-align:left;box-shadow:0 5px 18px #0001">
+<h3>💳 Motorcycle Financing</h3>
+<p>Learn about ways to finance your motorcycle purchase.</p>
+</button>
+
+<button onclick="serviceMessage('Service & Repairs')" style="background:white;padding:25px;text-align:left;box-shadow:0 5px 18px #0001">
+<h3>🔧 Service & Repairs</h3>
+<p>Find help with maintenance, repairs and spare parts.</p>
+</button>
+
+<button onclick="serviceMessage('Bike Verification')" style="background:white;padding:25px;text-align:left;box-shadow:0 5px 18px #0001">
+<h3>✅ Bike Verification</h3>
+<p>Get guidance before buying a used motorcycle.</p>
+</button>
+
+<button onclick="serviceMessage('Insurance')" style="background:white;padding:25px;text-align:left;box-shadow:0 5px 18px #0001">
+<h3>🛡️ Insurance</h3>
+<p>Get information about motorcycle insurance.</p>
+</button>
+
+<button onclick="serviceMessage('Spare Parts')" style="background:white;padding:25px;text-align:left;box-shadow:0 5px 18px #0001">
+<h3>⚙️ Spare Parts</h3>
+<p>Find genuine motorcycle parts and accessories.</p>
+</button>
+
+</div>
+</section>
 <footer>
 <h2>PikiHub Kenya 🇰🇪</h2>
 <p>Find Your Pikipiki. Ride With Confidence.</p>
@@ -495,5 +554,31 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 </script>
 
+
+<script>
+function chooseBrand(brand){
+    const select=document.querySelectorAll("select")[1];
+    if(select){
+        select.value=brand;
+        select.dispatchEvent(new Event("change"));
+    }
+    const bikes=document.getElementById("motorcycles");
+    if(bikes)bikes.scrollIntoView({behavior:"smooth"});
+}
+
+function serviceMessage(service){
+    if(service==="Service & Repairs"){
+        alert("🔧 PikiHub Service & Repairs\n\nContact PikiHub Kenya on WhatsApp for motorcycle service and repair assistance.");
+        window.open("https://wa.me/254786673688?text=Hello%20PikiHub%20Kenya%2C%20I%20need%20motorcycle%20service%20or%20repair%20help.","_blank");
+    }else if(service==="Bike Verification"){
+        alert("✅ Bike Verification\n\nBefore buying a used bike, check the logbook, chassis number, engine number and ownership documents.");
+    }else if(service==="Financing"){
+        alert("💳 Motorcycle Financing\n\nContact PikiHub Kenya for available financing information.");
+        window.open("https://wa.me/254786673688?text=Hello%20PikiHub%20Kenya%2C%20I%20want%20information%20about%20motorcycle%20financing.","_blank");
+    }else{
+        alert("PikiHub Kenya: "+service+" service selected.");
+    }
+}
+</script>
 </body>
 </html>
