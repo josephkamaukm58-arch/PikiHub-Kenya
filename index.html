@@ -105,20 +105,26 @@ nav a{font-size:13px}
 input,select,button{width:100%;box-sizing:border-box}
 }
 </style>
+
+<style>
+html{scroll-behavior:smooth}
+nav a{cursor:pointer}
+nav a:hover{transform:translateY(-1px)}
+</style>
 </head>
 <body>
 
 <header>
 <div class="logo">Piki<span>Hub</span> 🇰🇪</div>
 <nav>
-<a href="#">Home</a>
+<a href="#home">Home</a>
 <a href="#bikes">Motorcycles</a>
-<a href="#brands">Brands</a>
-<a href="#services">Services</a>
+<a href="#popular-brands">Brands</a>
+<a href="#motorcycle-services">Services</a>
 </nav>
 </header>
 
-<section class="hero">
+<section id="home" class="hero">
 <h1>Find Your Next Pikipiki</h1>
 <p>New & used motorcycles from across Kenya</p>
 
