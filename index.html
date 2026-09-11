@@ -247,22 +247,6 @@ nav{display:none}
 <p>Find Your Pikipiki. Ride With Confidence.</p>
 <p>© 2026 PikiHub Kenya</p>
 </footer>
-
-<script>
-function filterBikes(){
-const text=document.getElementById("search").value.toLowerCase();
-const brand=document.getElementById("brand").value;
-const condition=document.getElementById("condition").value;
-document.querySelectorAll(".card").forEach(card=>{
-const matchText=card.dataset.name.toLowerCase().includes(text);
-const matchBrand=!brand||card.dataset.brand===brand;
-const matchCondition=!condition||card.dataset.condition===condition;
-card.style.display=matchText&&matchBrand&&matchCondition?"block":"none";
-});
-}
-</script>
-
-
 <div class="upgrade-bar">
 <strong>🏍️ Ready to sell your motorcycle?</strong>
 <a class="upgrade-btn" href="#sell">SELL YOUR BIKE</a>
@@ -308,87 +292,155 @@ card.style.display=matchText&&matchBrand&&matchCondition?"block":"none";
 </div>
 
 <script>
-const countBox=document.getElementById("resultCount");
+document.addEventListener("DOMContentLoaded", function () {
 
-function filterBikes(){
- const text=document.getElementById("search").value.toLowerCase();
- const brand=document.getElementById("brand").value;
- const condition=document.getElementById("condition").value;
- const selects=document.querySelectorAll(".search select");
- const location=selects[3] ? selects[3].value : "";
+  const cards = document.querySelectorAll(".card");
+  const search = document.getElementById("search");
+  const brand = document.getElementById("brand");
+  const condition = document.getElementById("condition");
+  const searchBox = document.querySelector(".search");
+  const locationSelect = searchBox ? searchBox.querySelectorAll("select")[2] : null;
+  const countBox = document.getElementById("resultCount");
 
- let shown=0;
- document.querySelectorAll(".card").forEach(card=>{
-   const name=(card.dataset.name||"").toLowerCase();
-   const cardBrand=card.dataset.brand||"";
-   const cardCondition=card.dataset.condition||"";
-   const meta=(card.querySelector(".meta")?.textContent||"").toLowerCase();
+  function filterBikes() {
+    const text = (search?.value || "").toLowerCase().trim();
+    const selectedBrand = brand?.value || "";
+    const selectedCondition = condition?.value || "";
+    const selectedLocation = locationSelect?.value || "All Kenya";
 
-   const matchText=!text||name.includes(text);
-   const matchBrand=!brand||cardBrand===brand;
-   const matchCondition=!condition||cardCondition===condition;
-   const matchLocation=!location||location==="All Kenya"||meta.includes(location.toLowerCase());
+    let shown = 0;
 
-   const show=matchText&&matchBrand&&matchCondition&&matchLocation;
-   card.style.display=show?"block":"none";
-   if(show) shown++;
- });
- countBox.textContent="Showing "+shown+" motorcycle"+(shown===1?"":"s");
- document.getElementById("bikes").scrollIntoView({behavior:"smooth"});
-}
+    cards.forEach(card => {
+      const name = (card.dataset.name || "").toLowerCase();
+      const cardBrand = card.dataset.brand || "";
+      const cardCondition = card.dataset.condition || "";
+      const meta = (card.querySelector(".meta")?.textContent || "").toLowerCase();
 
-document.querySelectorAll(".search select").forEach(x=>x.addEventListener("change",filterBikes));
-document.getElementById("search").addEventListener("input",filterBikes);
+      const matchesText =
+        !text || name.includes(text) || meta.includes(text);
 
-document.querySelectorAll(".card").forEach(card=>{
- const actions=card.querySelector(".actions");
- const name=card.dataset.name||"Motorcycle";
- const phone="254700000000";
+      const matchesBrand =
+        !selectedBrand || cardBrand === selectedBrand;
 
- const fav=document.createElement("button");
- fav.className="fav";
- fav.innerHTML="♡";
- fav.onclick=()=>{
-   fav.innerHTML=fav.innerHTML==="♡"?"♥":"♡";
- };
- card.appendChild(fav);
+      const matchesCondition =
+        !selectedCondition || cardCondition === selectedCondition;
 
- const view=actions.querySelector(".primary");
- if(view){
-   view.onclick=()=>{
-     document.getElementById("modalTitle").textContent=name;
-     document.getElementById("modalText").textContent=
-       "Motorcycle: "+name+" | "+(card.querySelector(".meta")?.textContent||"Kenya")+
-       ". Contact the seller for the current price and availability.";
-     document.getElementById("bikeModal").style.display="flex";
-   };
- }
+      const matchesLocation =
+        selectedLocation === "All Kenya" ||
+        meta.includes(selectedLocation.toLowerCase());
 
- const wa=actions.querySelector(".dark");
- if(wa){
-   wa.classList.add("whatsapp");
-   wa.onclick=()=>{
-     const msg=encodeURIComponent("Hello PikiHub, I am interested in "+name+". Is it still available?");
-     window.open("https://wa.me/"+phone+"?text="+msg,"_blank");
-   };
- }
+      const show =
+        matchesText &&
+        matchesBrand &&
+        matchesCondition &&
+        matchesLocation;
+
+      card.style.display = show ? "" : "none";
+
+      if (show) shown++;
+    });
+
+    if (countBox) {
+      countBox.textContent =
+        "Showing " + shown + " motorcycle" + (shown === 1 ? "" : "s");
+    }
+  }
+
+  if (search) search.addEventListener("input", filterBikes);
+  if (brand) brand.addEventListener("change", filterBikes);
+  if (condition) condition.addEventListener("change", filterBikes);
+  if (locationSelect) locationSelect.addEventListener("change", filterBikes);
+
+  window.filterBikes = filterBikes;
+
+  // Favorite buttons
+  cards.forEach(card => {
+    const name = card.dataset.name || "Motorcycle";
+    const actions = card.querySelector(".actions");
+
+    const fav = document.createElement("button");
+    fav.className = "fav";
+    fav.type = "button";
+    fav.innerHTML = "♡";
+    fav.setAttribute("aria-label", "Favorite " + name);
+
+    fav.addEventListener("click", function () {
+      this.innerHTML = this.innerHTML === "♡" ? "♥" : "♡";
+    });
+
+    card.appendChild(fav);
+
+    // View Bike button
+    const view = actions?.querySelector(".primary");
+
+    if (view) {
+      view.addEventListener("click", function () {
+        const price =
+          card.querySelector(".price")?.textContent || "Contact seller";
+
+        alert(
+          name +
+          "\n\n" +
+          (card.querySelector(".meta")?.textContent || "Kenya") +
+          "\n" +
+          price +
+          "\n\nContact the seller for availability."
+        );
+      });
+    }
+
+    // WhatsApp button
+    const whatsapp = actions?.querySelector(".dark");
+
+    if (whatsapp) {
+      whatsapp.classList.add("whatsapp");
+      whatsapp.addEventListener("click", function () {
+        const message = encodeURIComponent(
+          "Hello, I found " + name +
+          " on PikiHub Kenya. Is it still available?"
+        );
+
+        // Temporary marketplace contact.
+        // Replace this number with the seller's real number
+        // when the seller-account system is connected.
+        const marketplaceNumber = "254700000000";
+
+        window.open(
+          "https://wa.me/" + marketplaceNumber + "?text=" + message,
+          "_blank"
+        );
+      });
+    }
+  });
+
+  // Sell form
+  const sellForm = document.getElementById("sellForm");
+
+  if (sellForm) {
+    sellForm.addEventListener("submit", function (event) {
+      event.preventDefault();
+
+      const bikeName =
+        document.getElementById("bikeName")?.value || "Motorcycle";
+
+      const price =
+        document.getElementById("bikePrice")?.value || "0";
+
+      alert(
+        "Listing received!\n\n" +
+        bikeName +
+        "\nPrice: KSh " +
+        Number(price).toLocaleString() +
+        "\n\nThe permanent seller-listing system will be connected next."
+      );
+
+      sellForm.reset();
+    });
+  }
+
+  filterBikes();
 });
-
-function closeBike(){
- document.getElementById("bikeModal").style.display="none";
-}
-
-document.getElementById("sellForm").addEventListener("submit",function(e){
- e.preventDefault();
- const name=document.getElementById("bikeName").value;
- const price=document.getElementById("bikePrice").value;
- alert("Thank you! Your "+name+" listing has been prepared. Price: KSh "+Number(price).toLocaleString()+".");
- this.reset();
-});
-
-window.onclick=e=>{
- if(e.target===document.getElementById("bikeModal")) closeBike();
-};
 </script>
+
 </body>
 </html>
