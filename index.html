@@ -395,6 +395,28 @@ WHATSAPP PIKIHUB
 
 </div>
 </section>
+
+<section style="padding:40px 5%;background:white">
+<h2 style="text-align:center">PikiHub Safety Tips 🛡️</h2>
+<div style="max-width:900px;margin:25px auto;display:grid;gap:12px">
+<div style="padding:16px;border-radius:12px;background:#f5f7fa">
+<strong>✅ Verify ownership</strong><br>
+Ask to see the original ownership documents before paying.
+</div>
+<div style="padding:16px;border-radius:12px;background:#f5f7fa">
+<strong>🔍 Inspect the motorcycle</strong><br>
+Check the engine, chassis number, tyres, brakes and general condition.
+</div>
+<div style="padding:16px;border-radius:12px;background:#f5f7fa">
+<strong>🚫 Never rush a payment</strong><br>
+Do not send money before you have properly verified the motorcycle and seller.
+</div>
+<div style="padding:16px;border-radius:12px;background:#f5f7fa">
+<strong>📱 Contact PikiHub</strong><br>
+For listing help, contact PikiHub Kenya on WhatsApp: 0786673688.
+</div>
+</div>
+</section>
 <footer>
 <h2>PikiHub Kenya 🇰🇪</h2>
 <p>Find Your Pikipiki. Ride With Confidence.</p>
@@ -413,6 +435,10 @@ WHATSAPP PIKIHUB
 <p>List your motorcycle on PikiHub Kenya</p>
 </div>
 <div class="sell-box">
+
+<p style="text-align:center;color:#667085;margin-bottom:20px">
+Complete the details below and PikiHub will prepare your motorcycle listing for WhatsApp.
+</p>
 <form id="sellForm">
 <div class="sell-grid">
 <input id="sellerName" placeholder="Your name" required>
@@ -580,6 +606,8 @@ if (sellForm) {
     const location = data.get("bikeLocation") || "Not specified";
     const condition = data.get("bikeCondition") || "Not specified";
     const phone = data.get("sellerPhone") || "Not specified";
+    const year = data.get("bikeYear") || "Not specified";
+    const mileage = data.get("bikeMileage") || "Not specified";
     const description = data.get("bikeDescription") || "No description";
 
     const message =
@@ -588,6 +616,8 @@ if (sellForm) {
       "Expected price: " + encodeURIComponent(price) + "%0A" +
       "Location: " + encodeURIComponent(location) + "%0A" +
       "Condition: " + encodeURIComponent(condition) + "%0A" +
+      "Year: " + encodeURIComponent(year) + "%0A" +
+      "Mileage: " + encodeURIComponent(mileage + " KM") + "%0A" +
       "Seller phone: " + encodeURIComponent(phone) + "%0A" +
       "Description: " + encodeURIComponent(description);
 
