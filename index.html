@@ -52,6 +52,26 @@ nav{display:none}
 .brands{grid-template-columns:repeat(3,1fr)}
 .bikes{grid-template-columns:1fr}
 }
+
+<style>
+/* PikiHub upgrade */
+.upgrade-bar{display:flex;justify-content:space-between;align-items:center;gap:12px;max-width:1100px;margin:0 auto;padding:16px 5%}
+.upgrade-btn{background:#07884d;color:white;border-radius:10px;padding:12px 18px;text-decoration:none;font-weight:800}
+.count{max-width:1100px;margin:0 auto;padding:0 5% 15px;color:#6b7280;font-weight:bold}
+.card{position:relative;transition:.2s}
+.card:hover{transform:translateY(-3px)}
+.fav{position:absolute;right:12px;top:12px;background:white!important;border-radius:50%!important;width:42px;height:42px;padding:0!important;font-size:20px;z-index:2}
+.whatsapp{background:#07884d!important;color:#fff}
+.sell-box{max-width:800px;margin:auto;background:white;padding:25px;border-radius:16px;box-shadow:0 2px 15px #00000012}
+.sell-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.sell-grid input,.sell-grid select,.sell-grid textarea{width:100%;padding:13px;border:1px solid #ddd;border-radius:8px}
+.sell-grid textarea{min-height:100px;grid-column:1/-1}
+.sell-submit{background:#f5a400;width:100%;margin-top:12px}
+.modal{display:none;position:fixed;inset:0;background:#0008;z-index:9999;padding:20px;align-items:center;justify-content:center}
+.modal-box{background:white;border-radius:16px;max-width:500px;width:100%;padding:25px}
+.close{float:right;background:#101820;color:white;padding:7px 12px}
+@media(max-width:600px){.sell-grid{grid-template-columns:1fr}.sell-grid textarea{grid-column:auto}}
+</style>
 </style>
 </head>
 <body>
@@ -244,5 +264,133 @@ card.style.display=matchText&&matchBrand&&matchCondition?"block":"none";
 }
 </script>
 
+
+<div class="upgrade-bar">
+<strong>🏍️ Ready to sell your motorcycle?</strong>
+<a class="upgrade-btn" href="#sell">SELL YOUR BIKE</a>
+</div>
+
+<div class="count" id="resultCount">Showing 6 motorcycles</div>
+
+<section id="sell">
+<div class="heading">
+<h2>Sell Your Pikipiki</h2>
+<p>List your motorcycle on PikiHub Kenya</p>
+</div>
+<div class="sell-box">
+<form id="sellForm">
+<div class="sell-grid">
+<input id="sellerName" placeholder="Your name" required>
+<input id="sellerPhone" placeholder="Phone number" required>
+<input id="bikeName" placeholder="Motorcycle name e.g. Boxer 125" required>
+<input id="bikePrice" type="number" placeholder="Price in KSh" required>
+<select id="bikeBrand" required>
+<option value="">Select brand</option>
+<option>Bajaj</option><option>TVS</option><option>Honda</option>
+<option>Yamaha</option><option>Haojue</option><option>Haojin</option>
+<option>Hero</option><option>Kibo</option><option>Other</option>
+</select>
+<select id="bikeCondition" required>
+<option value="">Condition</option><option>New</option><option>Used</option><option>Electric</option>
+</select>
+<input id="bikeLocation" placeholder="Location e.g. Nakuru" required>
+<textarea id="bikeDescription" placeholder="Describe your motorcycle"></textarea>
+</div>
+<button class="sell-submit" type="submit">SUBMIT MOTORCYCLE</button>
+</form>
+</div>
+</section>
+
+<div class="modal" id="bikeModal">
+<div class="modal-box">
+<button class="close" onclick="closeBike()">Close</button>
+<h2 id="modalTitle">Motorcycle</h2>
+<p id="modalText" style="margin-top:18px;line-height:1.7"></p>
+</div>
+</div>
+
+<script>
+const countBox=document.getElementById("resultCount");
+
+function filterBikes(){
+ const text=document.getElementById("search").value.toLowerCase();
+ const brand=document.getElementById("brand").value;
+ const condition=document.getElementById("condition").value;
+ const selects=document.querySelectorAll(".search select");
+ const location=selects[3] ? selects[3].value : "";
+
+ let shown=0;
+ document.querySelectorAll(".card").forEach(card=>{
+   const name=(card.dataset.name||"").toLowerCase();
+   const cardBrand=card.dataset.brand||"";
+   const cardCondition=card.dataset.condition||"";
+   const meta=(card.querySelector(".meta")?.textContent||"").toLowerCase();
+
+   const matchText=!text||name.includes(text);
+   const matchBrand=!brand||cardBrand===brand;
+   const matchCondition=!condition||cardCondition===condition;
+   const matchLocation=!location||location==="All Kenya"||meta.includes(location.toLowerCase());
+
+   const show=matchText&&matchBrand&&matchCondition&&matchLocation;
+   card.style.display=show?"block":"none";
+   if(show) shown++;
+ });
+ countBox.textContent="Showing "+shown+" motorcycle"+(shown===1?"":"s");
+ document.getElementById("bikes").scrollIntoView({behavior:"smooth"});
+}
+
+document.querySelectorAll(".search select").forEach(x=>x.addEventListener("change",filterBikes));
+document.getElementById("search").addEventListener("input",filterBikes);
+
+document.querySelectorAll(".card").forEach(card=>{
+ const actions=card.querySelector(".actions");
+ const name=card.dataset.name||"Motorcycle";
+ const phone="254700000000";
+
+ const fav=document.createElement("button");
+ fav.className="fav";
+ fav.innerHTML="♡";
+ fav.onclick=()=>{
+   fav.innerHTML=fav.innerHTML==="♡"?"♥":"♡";
+ };
+ card.appendChild(fav);
+
+ const view=actions.querySelector(".primary");
+ if(view){
+   view.onclick=()=>{
+     document.getElementById("modalTitle").textContent=name;
+     document.getElementById("modalText").textContent=
+       "Motorcycle: "+name+" | "+(card.querySelector(".meta")?.textContent||"Kenya")+
+       ". Contact the seller for the current price and availability.";
+     document.getElementById("bikeModal").style.display="flex";
+   };
+ }
+
+ const wa=actions.querySelector(".dark");
+ if(wa){
+   wa.classList.add("whatsapp");
+   wa.onclick=()=>{
+     const msg=encodeURIComponent("Hello PikiHub, I am interested in "+name+". Is it still available?");
+     window.open("https://wa.me/"+phone+"?text="+msg,"_blank");
+   };
+ }
+});
+
+function closeBike(){
+ document.getElementById("bikeModal").style.display="none";
+}
+
+document.getElementById("sellForm").addEventListener("submit",function(e){
+ e.preventDefault();
+ const name=document.getElementById("bikeName").value;
+ const price=document.getElementById("bikePrice").value;
+ alert("Thank you! Your "+name+" listing has been prepared. Price: KSh "+Number(price).toLocaleString()+".");
+ this.reset();
+});
+
+window.onclick=e=>{
+ if(e.target===document.getElementById("bikeModal")) closeBike();
+};
+</script>
 </body>
 </html>
