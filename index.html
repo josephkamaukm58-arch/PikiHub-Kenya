@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>PikiHub Kenya | Motorcycle Marketplace</title>
-<meta name="description" content="PikiHub Kenya - Find new and used motorcycles across Kenya.">
+<title>PikiHub Kenya | Buy & Sell Motorcycles in Kenya</title>
+<meta name="description" content="PikiHub Kenya - Buy and sell new, used and electric motorcycles across Kenya. Find your next pikipiki.">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:Arial,sans-serif;background:#f4f6f8;color:#17202a}
@@ -70,6 +70,40 @@ nav{display:none}
 .modal-box{background:white;border-radius:16px;max-width:500px;width:100%;padding:25px}
 .close{float:right;background:#101820;color:white;padding:7px 12px}
 @media(max-width:600px){.sell-grid{grid-template-columns:1fr}.sell-grid textarea{grid-column:auto}}
+
+/* PikiHub professional mobile upgrade */
+body{margin:0;font-family:Arial,sans-serif;background:#f5f7fa;color:#172033}
+header{position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,.15)}
+nav{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+nav a{transition:.2s}
+nav a:hover{opacity:.8}
+.hero{padding:55px 5%;text-align:center;background:linear-gradient(135deg,#071a2f,#12395c)}
+.hero h1{font-size:clamp(32px,8vw,60px);margin:10px 0}
+.hero p{font-size:18px}
+.search-box,.filters{max-width:1100px;margin:20px auto;padding:0 5%}
+input,select,button{font:inherit}
+input,select{border:1px solid #d5dbe3;border-radius:10px;padding:13px;background:white}
+button{cursor:pointer;border:0;border-radius:10px;padding:12px 16px;font-weight:bold}
+.card{transition:transform .2s,box-shadow .2s;overflow:hidden}
+.card:hover{transform:translateY(-4px);box-shadow:0 10px 30px rgba(0,0,0,.12)}
+.photo{height:210px!important;background:#e5e7eb;overflow:hidden}
+.photo img{width:100%;height:100%;object-fit:cover;display:block}
+.whatsapp-btn{background:#16a34a!important;color:white!important;text-decoration:none!important;display:inline-block}
+.favorite{font-size:24px!important;background:white!important}
+.sell-section{background:white;margin:30px 5%;padding:30px;border-radius:18px;box-shadow:0 5px 25px rgba(0,0,0,.08)}
+.sell-section h2{text-align:center}
+#sellForm{display:grid;gap:12px;max-width:700px;margin:auto}
+#sellForm input,#sellForm select,#sellForm textarea{width:100%;box-sizing:border-box}
+textarea{min-height:110px;padding:12px;border:1px solid #d5dbe3;border-radius:10px}
+.no-results{text-align:center;padding:40px;font-size:18px;display:none}
+@media(max-width:700px){
+nav{padding:12px 4%!important}
+nav a{font-size:13px}
+.hero{padding:38px 5%}
+.card{width:100%!important}
+.photo{height:190px!important}
+input,select,button{width:100%;box-sizing:border-box}
+}
 </style>
 </head>
 <body>
@@ -252,6 +286,15 @@ WHATSAPP PIKIHUB
 </a>
 </div>
 
+
+<section style="background:linear-gradient(135deg,#087f45,#12a85b);color:white;text-align:center;padding:35px 6%;margin-top:35px">
+<h2>Need a Motorcycle?</h2>
+<p>Talk directly to PikiHub Kenya on WhatsApp.</p>
+<a class="whatsapp-btn" href="https://wa.me/254786673688?text=Hello%20PikiHub%20Kenya%2C%20I%20want%20help%20finding%20a%20motorcycle." style="background:white!important;color:#087f45!important;padding:14px 25px;border-radius:12px;font-weight:bold">
+💬 CHAT ON WHATSAPP
+</a>
+<p style="margin-top:15px;font-weight:bold">0786673688</p>
+</section>
 <footer>
 <h2>PikiHub Kenya 🇰🇪</h2>
 <p>Find Your Pikipiki. Ride With Confidence.</p>
