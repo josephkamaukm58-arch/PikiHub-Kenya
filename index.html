@@ -569,30 +569,37 @@ document.addEventListener("DOMContentLoaded", function () {
   // Sell form
   const sellForm = document.getElementById("sellForm");
 
-  if (sellForm) {
-    sellForm.addEventListener("submit", function (event) {
-      event.preventDefault();
+if (sellForm) {
+  sellForm.addEventListener("submit", function(e) {
+    e.preventDefault();
 
-      const bikeName =
-        document.getElementById("bikeName")?.value || "Motorcycle";
+    const data = new FormData(sellForm);
 
-      const price =
-        document.getElementById("bikePrice")?.value || "0";
+    const seller = data.get("name") || "Seller";
+    const price = data.get("bikePrice") || "Not specified";
+    const location = data.get("bikeLocation") || "Not specified";
+    const condition = data.get("bikeCondition") || "Not specified";
+    const phone = data.get("sellerPhone") || "Not specified";
+    const description = data.get("bikeDescription") || "No description";
 
-      alert(
-        "Listing received!\n\n" +
-        bikeName +
-        "\nPrice: KSh " +
-        Number(price).toLocaleString() +
-        "\n\nThe permanent seller-listing system will be connected next."
-      );
+    const message =
+      "Hello PikiHub Kenya! I want to list my motorcycle.%0A%0A" +
+      "Seller: " + encodeURIComponent(seller) + "%0A" +
+      "Expected price: " + encodeURIComponent(price) + "%0A" +
+      "Location: " + encodeURIComponent(location) + "%0A" +
+      "Condition: " + encodeURIComponent(condition) + "%0A" +
+      "Seller phone: " + encodeURIComponent(phone) + "%0A" +
+      "Description: " + encodeURIComponent(description);
 
-      sellForm.reset();
-    });
-  }
+    window.open(
+      "https://wa.me/254786673688?text=" + message,
+      "_blank"
+    );
 
-  filterBikes();
-});
+    alert("Your motorcycle details are ready. WhatsApp will open so you can send the listing to PikiHub Kenya.");
+    sellForm.reset();
+  });
+}
 </script>
 
 
