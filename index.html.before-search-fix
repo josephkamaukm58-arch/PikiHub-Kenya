@@ -32,7 +32,7 @@ section{padding:42px 5%}
 .brand{text-align:center;font-weight:bold}
 .bikes{grid-template-columns:repeat(3,1fr)}
 .card{padding:0;overflow:hidden}
-.photo{height:190px;background:#e5e7eb;display:flex;align-items:center;justify-content:center;font-size:65px;overflow:hidden}.photo img{width:100%;height:100%;object-fit:cover;display:block}
+.photo{height:190px;background:#e5e7eb;display:flex;align-items:center;justify-content:center;font-size:65px}
 .info{padding:18px}
 .info h3{margin-bottom:7px}
 .meta{color:#6b7280;font-size:13px}
@@ -167,7 +167,7 @@ nav{display:none}
 <div class="bikes" id="bikeList">
 
 <div class="card" data-name="Bajaj Boxer 125" data-brand="Bajaj" data-condition="New">
-<div class="photo"><img src="https://images.unsplash.com/photo-1691440732272-5483897c39de?auto=format&fit=crop&w=1000&q=80" alt="Bajaj Boxer 125" loading="lazy"></div>
+<div class="photo">🏍️</div>
 <div class="info">
 <h3>Bajaj Boxer 125</h3>
 <div class="meta">New • 124.45cc • Kenya</div>
@@ -177,7 +177,7 @@ nav{display:none}
 </div>
 
 <div class="card" data-name="TVS HLX 125" data-brand="TVS" data-condition="New">
-<div class="photo"><img src="https://images.unsplash.com/photo-1559804662-83568221819b?auto=format&fit=crop&w=1000&q=80" alt="TVS HLX 125" loading="lazy"></div>
+<div class="photo">🏍️</div>
 <div class="info">
 <h3>TVS HLX 125</h3>
 <div class="meta">New • 125cc • Kenya</div>
@@ -187,7 +187,7 @@ nav{display:none}
 </div>
 
 <div class="card" data-name="Honda Motorcycle" data-brand="Honda" data-condition="New">
-<div class="photo"><img src="https://images.unsplash.com/photo-1560752486-6857e1c49231?auto=format&fit=crop&w=1000&q=80" alt="Honda Motorcycle" loading="lazy"></div>
+<div class="photo">🏍️</div>
 <div class="info">
 <h3>Honda Motorcycle</h3>
 <div class="meta">New • Kenya</div>
@@ -197,7 +197,7 @@ nav{display:none}
 </div>
 
 <div class="card" data-name="Haojue Motorcycle" data-brand="Haojue" data-condition="Used">
-<div class="photo"><img src="https://images.unsplash.com/photo-1558676211-ed84c3f9fecf?auto=format&fit=crop&w=1000&q=80" alt="Haojue Motorcycle" loading="lazy"></div>
+<div class="photo">🏍️</div>
 <div class="info">
 <h3>Haojue Motorcycle</h3>
 <div class="meta">Used • Kenya</div>
@@ -207,7 +207,7 @@ nav{display:none}
 </div>
 
 <div class="card" data-name="Yamaha Motorcycle" data-brand="Yamaha" data-condition="Used">
-<div class="photo"><img src="https://images.unsplash.com/photo-1664643891401-37d4a5559c86?auto=format&fit=crop&w=1000&q=80" alt="Yamaha Motorcycle" loading="lazy"></div>
+<div class="photo">🏍️</div>
 <div class="info">
 <h3>Yamaha Motorcycle</h3>
 <div class="meta">Used • Kenya</div>
@@ -217,7 +217,7 @@ nav{display:none}
 </div>
 
 <div class="card" data-name="Electric Motorcycle" data-brand="Electric" data-condition="Electric">
-<div class="photo"><img src="https://images.unsplash.com/photo-1560752486-6857e1c49231?auto=format&fit=crop&w=1000&q=80" alt="Electric Motorcycle" loading="lazy"></div>
+<div class="photo">⚡🏍️</div>
 <div class="info">
 <h3>Electric Motorcycle</h3>
 <div class="meta">Electric • Kenya</div>
@@ -242,21 +242,27 @@ nav{display:none}
 </div>
 </section>
 
-
-<div style="background:#07884d;color:white;text-align:center;padding:22px 5%;">
-<h3>Need help finding a motorcycle?</h3>
-<p style="margin:8px 0 14px;">Chat with PikiHub Kenya on WhatsApp</p>
-<a href="https://wa.me/254786673688?text=Hello%20PikiHub%20Kenya%2C%20I%20need%20help%20finding%20a%20motorcycle."
-style="display:inline-block;background:white;color:#07884d;padding:12px 20px;border-radius:10px;text-decoration:none;font-weight:bold;">
-WHATSAPP PIKIHUB
-</a>
-</div>
-
 <footer>
 <h2>PikiHub Kenya 🇰🇪</h2>
 <p>Find Your Pikipiki. Ride With Confidence.</p>
 <p>© 2026 PikiHub Kenya</p>
 </footer>
+
+<script>
+function filterBikes(){
+const text=document.getElementById("search").value.toLowerCase();
+const brand=document.getElementById("brand").value;
+const condition=document.getElementById("condition").value;
+document.querySelectorAll(".card").forEach(card=>{
+const matchText=card.dataset.name.toLowerCase().includes(text);
+const matchBrand=!brand||card.dataset.brand===brand;
+const matchCondition=!condition||card.dataset.condition===condition;
+card.style.display=matchText&&matchBrand&&matchCondition?"block":"none";
+});
+}
+</script>
+
+
 <div class="upgrade-bar">
 <strong>🏍️ Ready to sell your motorcycle?</strong>
 <a class="upgrade-btn" href="#sell">SELL YOUR BIKE</a>
@@ -302,155 +308,87 @@ WHATSAPP PIKIHUB
 </div>
 
 <script>
-document.addEventListener("DOMContentLoaded", function () {
+const countBox=document.getElementById("resultCount");
 
-  const cards = document.querySelectorAll(".card");
-  const search = document.getElementById("search");
-  const brand = document.getElementById("brand");
-  const condition = document.getElementById("condition");
-  const searchBox = document.querySelector(".search");
-  const locationSelect = searchBox ? searchBox.querySelectorAll("select")[2] : null;
-  const countBox = document.getElementById("resultCount");
+function filterBikes(){
+ const text=document.getElementById("search").value.toLowerCase();
+ const brand=document.getElementById("brand").value;
+ const condition=document.getElementById("condition").value;
+ const selects=document.querySelectorAll(".search select");
+ const location=selects[3] ? selects[3].value : "";
 
-  function filterBikes() {
-    const text = (search?.value || "").toLowerCase().trim();
-    const selectedBrand = brand?.value || "";
-    const selectedCondition = condition?.value || "";
-    const selectedLocation = locationSelect?.value || "All Kenya";
+ let shown=0;
+ document.querySelectorAll(".card").forEach(card=>{
+   const name=(card.dataset.name||"").toLowerCase();
+   const cardBrand=card.dataset.brand||"";
+   const cardCondition=card.dataset.condition||"";
+   const meta=(card.querySelector(".meta")?.textContent||"").toLowerCase();
 
-    let shown = 0;
+   const matchText=!text||name.includes(text);
+   const matchBrand=!brand||cardBrand===brand;
+   const matchCondition=!condition||cardCondition===condition;
+   const matchLocation=!location||location==="All Kenya"||meta.includes(location.toLowerCase());
 
-    cards.forEach(card => {
-      const name = (card.dataset.name || "").toLowerCase();
-      const cardBrand = card.dataset.brand || "";
-      const cardCondition = card.dataset.condition || "";
-      const meta = (card.querySelector(".meta")?.textContent || "").toLowerCase();
+   const show=matchText&&matchBrand&&matchCondition&&matchLocation;
+   card.style.display=show?"block":"none";
+   if(show) shown++;
+ });
+ countBox.textContent="Showing "+shown+" motorcycle"+(shown===1?"":"s");
+ document.getElementById("bikes").scrollIntoView({behavior:"smooth"});
+}
 
-      const matchesText =
-        !text || name.includes(text) || meta.includes(text);
+document.querySelectorAll(".search select").forEach(x=>x.addEventListener("change",filterBikes));
+document.getElementById("search").addEventListener("input",filterBikes);
 
-      const matchesBrand =
-        !selectedBrand || cardBrand === selectedBrand;
+document.querySelectorAll(".card").forEach(card=>{
+ const actions=card.querySelector(".actions");
+ const name=card.dataset.name||"Motorcycle";
+ const phone="254700000000";
 
-      const matchesCondition =
-        !selectedCondition || cardCondition === selectedCondition;
+ const fav=document.createElement("button");
+ fav.className="fav";
+ fav.innerHTML="♡";
+ fav.onclick=()=>{
+   fav.innerHTML=fav.innerHTML==="♡"?"♥":"♡";
+ };
+ card.appendChild(fav);
 
-      const matchesLocation =
-        selectedLocation === "All Kenya" ||
-        meta.includes(selectedLocation.toLowerCase());
+ const view=actions.querySelector(".primary");
+ if(view){
+   view.onclick=()=>{
+     document.getElementById("modalTitle").textContent=name;
+     document.getElementById("modalText").textContent=
+       "Motorcycle: "+name+" | "+(card.querySelector(".meta")?.textContent||"Kenya")+
+       ". Contact the seller for the current price and availability.";
+     document.getElementById("bikeModal").style.display="flex";
+   };
+ }
 
-      const show =
-        matchesText &&
-        matchesBrand &&
-        matchesCondition &&
-        matchesLocation;
-
-      card.style.display = show ? "" : "none";
-
-      if (show) shown++;
-    });
-
-    if (countBox) {
-      countBox.textContent =
-        "Showing " + shown + " motorcycle" + (shown === 1 ? "" : "s");
-    }
-  }
-
-  if (search) search.addEventListener("input", filterBikes);
-  if (brand) brand.addEventListener("change", filterBikes);
-  if (condition) condition.addEventListener("change", filterBikes);
-  if (locationSelect) locationSelect.addEventListener("change", filterBikes);
-
-  window.filterBikes = filterBikes;
-
-  // Favorite buttons
-  cards.forEach(card => {
-    const name = card.dataset.name || "Motorcycle";
-    const actions = card.querySelector(".actions");
-
-    const fav = document.createElement("button");
-    fav.className = "fav";
-    fav.type = "button";
-    fav.innerHTML = "♡";
-    fav.setAttribute("aria-label", "Favorite " + name);
-
-    fav.addEventListener("click", function () {
-      this.innerHTML = this.innerHTML === "♡" ? "♥" : "♡";
-    });
-
-    card.appendChild(fav);
-
-    // View Bike button
-    const view = actions?.querySelector(".primary");
-
-    if (view) {
-      view.addEventListener("click", function () {
-        const price =
-          card.querySelector(".price")?.textContent || "Contact seller";
-
-        alert(
-          name +
-          "\n\n" +
-          (card.querySelector(".meta")?.textContent || "Kenya") +
-          "\n" +
-          price +
-          "\n\nContact the seller for availability."
-        );
-      });
-    }
-
-    // WhatsApp button
-    const whatsapp = actions?.querySelector(".dark");
-
-    if (whatsapp) {
-      whatsapp.classList.add("whatsapp");
-      whatsapp.addEventListener("click", function () {
-        const message = encodeURIComponent(
-          "Hello, I found " + name +
-          " on PikiHub Kenya. Is it still available?"
-        );
-
-        // Temporary marketplace contact.
-        // Replace this number with the seller's real number
-        // when the seller-account system is connected.
-        const marketplaceNumber = "254786673688";
-
-        window.open(
-          "https://wa.me/" + marketplaceNumber + "?text=" + message,
-          "_blank"
-        );
-      });
-    }
-  });
-
-  // Sell form
-  const sellForm = document.getElementById("sellForm");
-
-  if (sellForm) {
-    sellForm.addEventListener("submit", function (event) {
-      event.preventDefault();
-
-      const bikeName =
-        document.getElementById("bikeName")?.value || "Motorcycle";
-
-      const price =
-        document.getElementById("bikePrice")?.value || "0";
-
-      alert(
-        "Listing received!\n\n" +
-        bikeName +
-        "\nPrice: KSh " +
-        Number(price).toLocaleString() +
-        "\n\nThe permanent seller-listing system will be connected next."
-      );
-
-      sellForm.reset();
-    });
-  }
-
-  filterBikes();
+ const wa=actions.querySelector(".dark");
+ if(wa){
+   wa.classList.add("whatsapp");
+   wa.onclick=()=>{
+     const msg=encodeURIComponent("Hello PikiHub, I am interested in "+name+". Is it still available?");
+     window.open("https://wa.me/"+phone+"?text="+msg,"_blank");
+   };
+ }
 });
-</script>
 
+function closeBike(){
+ document.getElementById("bikeModal").style.display="none";
+}
+
+document.getElementById("sellForm").addEventListener("submit",function(e){
+ e.preventDefault();
+ const name=document.getElementById("bikeName").value;
+ const price=document.getElementById("bikePrice").value;
+ alert("Thank you! Your "+name+" listing has been prepared. Price: KSh "+Number(price).toLocaleString()+".");
+ this.reset();
+});
+
+window.onclick=e=>{
+ if(e.target===document.getElementById("bikeModal")) closeBike();
+};
+</script>
 </body>
 </html>
